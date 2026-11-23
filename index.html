@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QalaAccess AI — Every Journey Matters</title>
+  <meta name="description" content="QalaAccess AI: AI-assisted inclusive urban navigation for Astana, Kazakhstan. PLS 419 final project.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230f766e'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3EQA%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,ital,wght@6..72,0,400;6..72,0,500;6..72,1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!--
+  HOW TO EDIT THE TEXT (no programming needed)
+  - Each section starts with a comment line such as: 01 THE PROBLEM.
+  - Paragraphs are inside <p> ... </p>. Change the words between the tags.
+  - Sources are in the References list near the end, one <li> ... </li> per source.
+  - On github.com: open index.html, click the pencil icon, edit, then "Commit changes".
+-->
+<a class="skip-link" href="#problem">Skip to content</a>
+<div class="banner"><strong>PLS 419 · An AI Answer for Kazakhstan</strong> · Final project · University research prototype — not a certified navigation or safety system</div>
+
+<header class="masthead wrap">
+  <div class="kicker">Inclusive urban navigation · Astana</div>
+  <h1>QalaAccess AI</h1>
+  <p class="standfirst"><strong>The shortest route is not always the most accessible.</strong> A citizen-powered, AI-assisted map of the barriers on Astana’s streets — because an accessible destination is not enough if the journey itself is inaccessible.</p>
+  <div class="byline"><b>Every Journey Matters</b> · By <b>Gaziza Aushenova</b> · 2026</div>
+</header>
+
+<nav id="toc" aria-label="Sections">
+  <div class="bar">
+    <div class="toc-row">
+      <a href="#problem"><span class="n">01</span>The Problem</a>
+      <a href="#data"><span class="n">02</span>Background &amp; Data</a>
+      <a href="#research"><span class="n">03</span>Current State of Research</a>
+      <a href="#solution"><span class="n">04</span>AI Solution &amp; Its Cost</a>
+      <a href="#planner"><span class="n">05</span>Route Planner</a>
+      <a href="#report"><span class="n">06</span>Report a Barrier</a>
+      <a href="#transparency">AI Transparency</a>
+      <a href="#references">References</a>
+    </div>
+    <div class="tools"><button class="btn btn-ghost btn-sm" id="largeTextBtn" aria-pressed="false" title="Increase text size">A+</button></div>
+  </div>
+</nav>
+
+<main>
+<div class="hero-stat wrap">
+  <div class="big">1<span>/112</span></div>
+  <div class="label">pedestrian crossings in central Astana have any mapped data on a sound signal</div>
+  <div class="sub">OpenStreetMap, Nurzhol Boulevard pilot area, November 2026. For a blind pedestrian, every other crossing is a guess.</div>
+  <div class="cta"><a class="btn btn-primary" href="#planner">Try the route planner</a><a class="btn" href="#problem">Read the research</a></div>
+</div>
+
+<!-- 01 THE PROBLEM -->
+<section class="block" id="problem" aria-labelledby="problem-h">
+  <div class="wrap">
+  <div class="sec-head"><div class="num" aria-hidden="true">01</div><h2 id="problem-h">The Problem</h2></div>
+
+
+  <h3>The issue</h3>
+  <p>Kazakhstan has spent the last decade making buildings more accessible: ramps at entrances, accessible toilets, lifts in new housing. Yet a person in a wheelchair, a blind pedestrian or a deaf commuter does not live inside one building. They have to get there. Between the bus stop and the ramp lie sidewalks, kerbs, underpasses, stairs and pedestrian crossings, and this is where the chain of accessibility most often breaks. This project focuses on that gap: the <strong>inaccessible journey</strong> through public urban space, using Astana as the pilot city.</p>
+  <p>Ordinary navigation apps make the problem invisible. They optimise for distance and time and assume that every path can be walked by everyone. For a wheelchair user, a route that is 300 metres shorter but contains a flight of stairs is not a shorter route; it is no route at all.</p>
+
+  <h3>Who is affected, where, and at what scale</h3>
+  <p>According to the Minister of Labour and Social Protection, about 752,000 people with a registered disability lived in Kazakhstan in 2026, or 3.7% of the population; 56% were of working age, 29% of pension age and 15% were children (Bizmedia.kz, 2026). An analysis of official data for 2011–2023 found that the number grew by 28.7% over twelve years, and that the number of children with disabilities more than doubled between 2010 and 2022, from 49,349 to 104,260 (Forbes.kz, 2025). The European Training Foundation notes that 58% of persons with disabilities live in urban areas (ETF, 2026), so city streets are where most of them have to move.</p>
+  <p>These numbers are the lower bound. The World Health Organization estimates that 1.3 billion people, about 16% of humanity, experience significant disability (WHO, 2022). Older people, parents with prams and people with temporary injuries also depend on step-free, well-marked routes.</p>
+
+  <h3>How the problem is changing over time</h3>
+  <p>Three trends make the issue more pressing. First, the registered population is growing every year (711,800 in 2022, 725,000 in 2023, 737,000 in 2024; Bizmedia.kz, 2026), and Kazakhstan’s population is ageing. Second, the state has committed to change. Kazakhstan ratified the UN Convention on the Rights of Persons with Disabilities (CRPD) in 2015, adopted a new Social Code in 2023 that recognises equal rights and non-discrimination, and is now implementing a Concept of Inclusive Policy for 2025–2030 (UN CRPD Committee, 2024; Prime Minister of Kazakhstan, 2026). Third, the gap between official progress and lived experience remains wide. The government reports that 67% of about 43,000 facilities on its interactive accessibility map are fully adapted, up from 53% in 2024 (Prime Minister of Kazakhstan, 2026). Independent reporting, by contrast, quotes experts who estimate that around 80% of facilities are inaccessible, and found that only 11 of 3,200 rated facilities on the map were accessible to wheelchair users (CABAR.asia, n.d.).</p>
+  <p>In 2024 the UN Committee on the Rights of Persons with Disabilities reviewed Kazakhstan for the first time. It criticised the “narrow scope of accessibility requirements, emphasizing physical measures such as ramps” and the lack of legally binding mechanisms to enforce accessibility standards. It also noted the absence of a national strategy on personal mobility and of orientation training for people with visual impairments (UN CRPD Committee, 2024, paras. 19, 43).</p>
+
+  <h3>The social-science question</h3>
+  <p>The barriers themselves are physical, but their persistence is social and political. Three mechanisms keep the inaccessible journey in place.</p>
+  <ul>
+    <li><strong>Fragmented responsibility.</strong> A single walk crosses the jurisdiction of the city akimat, road-maintenance contractors, building owners and traffic police. Each actor can comply with its own standard while the route as a whole remains impassable. No institution “owns” the journey.</li>
+    <li><strong>Who counts and who is counted.</strong> Accessibility is measured facility by facility, mostly for public buildings, and the people affected are counted through a medical certification system. What is not measured is not managed, and the experiences of disabled pedestrians rarely reach planners (Yespolova, 2020).</li>
+    <li><strong>Voice and power.</strong> Disabled people have the most precise knowledge of where routes fail, but the least power over street design. The CRPD principle “nothing about us without us” is written into law but not yet into everyday planning (UN CRPD Committee, 2024).</li>
+  </ul>
+  <div class="qbox"><div class="t">The social-science question</div><p>The research question that follows is therefore: <strong>why do accessibility reforms in Kazakhstan improve individual buildings faster than they improve the routes between them, and can better, citizen-generated data shift that balance?</strong> The problem is real for the hundreds of thousands of registered people with disabilities, and for everyone the register does not count.</p></div>
+
+  </div>
+</section>
+
+<!-- 02 BACKGROUND & DATA -->
+<section class="block" id="data" aria-labelledby="data-h">
+  <div class="wrap">
+  <div class="sec-head"><div class="num" aria-hidden="true">02</div><h2 id="data-h">Background &amp; Data</h2></div>
+  <h3>Who measures what</h3>
+  <p>Several institutions produce data on disability and accessibility in Kazakhstan, each answering a different question (Table 1).</p>
+  <div class="tbl-box table-scroll">
+  <table class="data">
+    <caption>Table 1. The data landscape on disability and urban accessibility in Kazakhstan <span class="small">(compiled by the author)</span></caption>
+    <thead><tr><th>Source</th><th>What it measures</th><th>What it does not show</th></tr></thead>
+    <tbody>
+      <tr><td>Ministry of Labour and Social Protection; disability database</td><td>Number of people with a certified disability, by age group and region; benefits and employment</td><td>People without certification; where and how they travel</td></tr>
+      <tr><td>Bureau of National Statistics</td><td>People served by special social service organisations, by type of impairment</td><td>Everyday mobility of people living independently</td></tr>
+      <tr><td>Interactive accessibility map (government)</td><td>Accessibility rating of individual facilities (about 43,000)</td><td>Sidewalks, kerbs and crossings between facilities</td></tr>
+      <tr><td>UN CRPD Committee, WHO</td><td>Compliance with the Convention; global prevalence estimates</td><td>Street-level conditions in a specific city</td></tr>
+      <tr><td>OpenStreetMap (volunteer map)</td><td>Geometry of footpaths, stairs and crossings; optional accessibility tags</td><td>Mostly empty accessibility tags (see Figure 2)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>What the data shows</h3>
+  <p>Official figures show steady growth in the registered population with disabilities (Figure 1). The number rose from 626,740 in 2013 to about 752,000 in 2026, while its share of the population stayed close to 3.6–3.7% (Forbes.kz, 2025; Bizmedia.kz, 2026). Public spending followed: combined spending from the state budget and the social insurance fund reached about 1 trillion tenge in 2025 and is planned at 1.1 trillion in 2026 (Bizmedia.kz, 2026). None of these figures, however, says whether the streets between home and a service can actually be used.</p>
+  <figure class="chart" aria-labelledby="fig1t">
+    <div class="c-title" id="fig1t">Figure 1. Registered persons with disabilities in Kazakhstan</div>
+    <div class="c-sub">Thousands of people · official figures</div>
+    <div role="img" aria-label="2013: 626.7 thousand; 2022: 711.8; 2023: 725; 2024: 737; 2026: about 752.">
+      <div class="lrow dim"><span class="name">2013</span><span class="track"><span class="bar" style="display:block;width:78.3%"></span></span><span class="val">626.7k</span></div>
+      <div class="lrow"><span class="name">2022</span><span class="track"><span class="bar" style="display:block;width:89.0%"></span></span><span class="val">711.8k</span></div>
+      <div class="lrow"><span class="name">2023</span><span class="track"><span class="bar" style="display:block;width:90.6%"></span></span><span class="val">725k</span></div>
+      <div class="lrow"><span class="name">2024</span><span class="track"><span class="bar" style="display:block;width:92.1%"></span></span><span class="val">737k</span></div>
+      <div class="lrow"><span class="name">2026</span><span class="track"><span class="bar" style="display:block;width:94.0%"></span></span><span class="val">≈752k</span></div>
+    </div>
+    <figcaption>Built by the author from figures reported by Forbes.kz (2025; analysis of official data, 2013 value) and the Minister of Labour and Social Protection (Bizmedia.kz, 2026; 2022–2026 values). The 2013 bar is shaded differently because it comes from a different source. The 2026 value is approximate.</figcaption>
+  </figure>
+  <p>For accessibility, the government reports rapid progress. The share of fully adapted facilities on the accessibility map rose from 53% in 2024 to 64% in 2025 and 67% in 2026, with a target of 80% (Prime Minister of Kazakhstan, 2026). Earlier, the ministry had reported that 90.7% of social and transport infrastructure facilities were accessible (Ministry of Labour and Social Protection, n.d.). The two series cannot both be right, which shows how differently accessibility is defined.</p>
+
+  <h3>My own data: the street-level gap</h3>
+  <p>To test what is known about routes rather than buildings, I used the open pedestrian network that powers this project’s route planner. Using OpenStreetMap data for the Nurzhol Boulevard area of Astana (downloaded 23 November 2026), I counted how many path segments carry accessibility information (Figure 2). The area contains 3,762 mapped path segments, 112 crossing segments and 56 stair segments. Only one crossing has any information about an audible signal, one has information about tactile paving, and two have information about the kerb. The surface type is known for only 15% of segments.</p>
+  <figure class="chart" aria-labelledby="fig2t">
+    <div class="c-title" id="fig2t">Figure 2. What OpenStreetMap knows about 112 pedestrian crossings in central Astana</div>
+    <div class="c-sub">Crossing segments with each type of information · Nurzhol Boulevard pilot area · Nov 2026</div>
+    <div role="img" aria-label="Of 112 crossing segments: traffic signal mapped 67; kerb information 2; audible signal information 1; tactile paving information 1.">
+      <div class="lrow"><span class="name">Traffic signal</span><span class="track"><span class="bar" style="display:block;width:59.8%"></span></span><span class="val">67 / 112</span></div>
+      <div class="lrow"><span class="name">Kerb info</span><span class="track"><span class="bar" style="display:block;width:1.8%"></span></span><span class="val">2 / 112</span></div>
+      <div class="lrow"><span class="name">Audible signal</span><span class="track"><span class="bar" style="display:block;width:0.9%"></span></span><span class="val">1 / 112</span></div>
+      <div class="lrow"><span class="name">Tactile paving</span><span class="track"><span class="bar" style="display:block;width:0.9%"></span></span><span class="val">1 / 112</span></div>
+    </div>
+    <figcaption>Calculated by the author from OpenStreetMap data (© OpenStreetMap contributors, ODbL).</figcaption>
+  </figure>
+  <p>In other words, a blind pedestrian asking “does this crossing have a sound signal?” gets an answer for less than 1% of crossings in the most showcased part of the capital. Data exists for stairs, so the planner can avoid them, but is almost absent for features that matter to blind, deaf and low-vision pedestrians.</p>
+
+  <h3>Where the data is silent, and who falls through the gaps</h3>
+  <ul>
+    <li><strong>People without certification.</strong> The UN Committee found that persons with disabilities are under-represented in national statistics because of the use of the medical model of disability, and recommended the Washington Group questions instead (UN CRPD Committee, 2024, paras. 65–66). The contrast between Kazakhstan’s 3.7% and the WHO’s global estimate of 16% suggests how many people may be missing (WHO, 2022).</li>
+    <li><strong>Journeys, not buildings.</strong> No public dataset records barriers on sidewalks and crossings. UNDP notes that accessibility maps mostly contain government buildings and little about private organisations (UNDP Kazakhstan, n.d.).</li>
+    <li><strong>Intersectional groups.</strong> The Committee also found little data on women, older people, children and migrants with disabilities (UN CRPD Committee, 2024, para. 65).</li>
+    <li><strong>Quality over time.</strong> A ramp can exist and still be unusable. In Astana’s subsidised housing, accessibility features were present but often poorly built or not maintained (Kaiyrly, 2025). A one-time audit cannot capture ice, construction fences or a broken sound signal.</li>
+  </ul>
+
+  <h3>How far can the numbers be trusted?</h3>
+  <p>The registry figures are reliable for what they measure: certified disability, used to pay benefits. They are a poor measure of how many people face barriers on the street. The accessibility map is less reliable: its methodology is not explained in the releases I found, its percentages differ between releases, and activists told CABAR that people with disabilities hardly used it (CABAR.asia, n.d.). OpenStreetMap is transparent and openly licensed, but its accessibility tags depend on volunteers and are almost empty in Astana. The honest conclusion is that <strong>nobody currently knows how accessible Astana’s routes are</strong>. That data gap is the space this project works in.</p>
+
+  </div>
+</section>
+
+<!-- 03 CURRENT STATE OF RESEARCH -->
+<section class="block" id="research" aria-labelledby="research-h">
+  <div class="wrap">
+  <div class="sec-head"><div class="num" aria-hidden="true">03</div><h2 id="research-h">Current State of Research</h2></div>
+  <p>Research relevant to accessible urban journeys comes from two worlds that rarely meet: social research on disability in the post-Soviet region, and computer and geographic science on mapping and routing. I organise the literature by approach rather than by author.</p>
+
+  <h3>Approach 1: Disability as a social and political experience in the post-Soviet region</h3>
+  <p>Scholarship on Eastern Europe and the former Soviet Union shows that disability policy in the region still carries Soviet legacies: a medical and institutional view of disability, welfare built around certification and benefits, and limited participation of disabled people in policy-making (Rasell &amp; Iarskaia-Smirnova, 2014). Phillips’ (2011) ethnography of post-Soviet Ukraine documents the creative strategies disabled people use to claim <em>mobile citizenship</em>: asserting their rights by moving between the welfare state, civic activism and public life. Physical mobility and political inclusion appear, in this view, as two sides of the same problem.</p>
+  <p>Studies in Kazakhstan confirm this picture at the city level. Yespolova (2020), using grounded theory with disabled residents of Almaty, found that their voices and needs were not considered in planning and development, and that sidewalks, ramps, transport and tactile paving remained major barriers. Kaiyrly (2025) studied subsidised housing in Astana and found that ramps and lifts existed but were often poorly built or not maintained, which increased residents’ dependence on relatives. Both studies are small-scale and qualitative, and both point to the same gap between formal compliance and real usability.</p>
+
+  <h3>Approach 2: Crowdsourcing and participatory mapping</h3>
+  <p>A second body of research asks how accessibility data can be collected at scale without expensive professional audits. Wheelmap, run by the Berlin non-profit Sozialhelden, lets anyone rate places with a traffic-light scheme and stores the data in OpenStreetMap, so it works worldwide although most entries are in Germany (Mobasheri et al., 2017). Project Sidewalk moved from places to streets: volunteers and paid crowdworkers “walk” through Google Street View and label curb ramps, missing ramps, obstacles and surface problems (Saha et al., 2019). Its deployment in Washington, D.C. showed that remote crowd audits can cover a whole city, but also revealed a trade-off between scale and label quality.</p>
+
+  <h3>Approach 3: Computer vision and AI for detecting barriers</h3>
+  <p>Crowdsourced labels became the training data for the next step. Weld et al. (2019) trained deep neural networks on more than 300,000 Project Sidewalk labels to detect and validate sidewalk problems automatically; in some tasks the model matched or exceeded human labellers, but it struggled with low-resolution images and difficult lighting, and the authors had to test separately how well a model trained in one city transfers to another. Hosseini et al. (2023) built Tile2Net, an open-source tool that extracts sidewalks, crosswalks and footpaths from aerial imagery and turns them into a network that routing tools can use. It was trained on about 20,000 image tiles from four US cities.</p>
+
+  <h3>Approach 4: Personalised pedestrian routing</h3>
+  <p>The final approach asks how such data should be used. Bolten and Caspi (2021), the team behind the AccessMap routing tool in Seattle, propose “personalised pedestrian network analysis”: the same street network is weighted differently for each mobility profile. Their city-scale analysis shows that pedestrians with different needs disagree about which corridors are most important. There is no single “accessible route”, only routes that are accessible for someone.</p>
+
+  <h3>What is known, what is contested, where research falls short</h3>
+  <p><strong>Known.</strong> Building-level accessibility does not guarantee accessible journeys; street-level barriers can be mapped by crowds and partly detected by AI; and routing must be personalised.</p>
+  <p><strong>Contested.</strong> First, how far AI can replace human auditors: Weld et al. report near-human performance on some tasks, while the same work documents systematic errors and treats transfer between cities as an open question. Second, who should own accessibility data: volunteer platforms such as Wheelmap and OpenStreetMap, or government registries. Third, whether crowdsourcing empowers disabled people or quietly shifts the state’s monitoring work onto them as unpaid labour.</p>
+  <p><strong>Shortfalls.</strong> The technical literature is overwhelmingly built in North America and Western Europe, on Google Street View coverage, dense volunteer mapping and English-language interfaces. Its models have not been tested on Kazakhstani streets, winter conditions or Soviet-era urban layouts. The regional social research, in turn, is qualitative and small-scale and does not use spatial data. None of the studies reviewed here evaluates audible or visual crossing signals, the barriers that matter most to blind and deaf pedestrians.</p>
+
+  <div class="qbox"><div class="t">The gap this project speaks to</div><p>No study I found connects the lived experience of disabled pedestrians in Kazakhstan with an open, street-level data system that could feed routing and public policy. QalaAccess AI tests whether the tools developed in Seattle and Washington can be adapted to Astana, and whether citizen reports, supported but not replaced by AI, can make visible what official accessibility statistics currently miss.</p></div>
+
+  </div>
+</section>
+
+<!-- 04 THE AI-ASSISTED SOLUTION, AND WHAT IT WOULD COST -->
+<section class="block" id="solution" aria-labelledby="solution-h">
+  <div class="wrap">
+  <div class="sec-head"><div class="num" aria-hidden="true">04</div><h2 id="solution-h">The AI-Assisted Solution, and What It Would Cost</h2></div>
+  <h3>Part A — The solution: what kind of system</h3>
+  <p>QalaAccess AI is a civic data system with three layers. The <a href="#planner">route planner</a> and <a href="#report">reporting form</a> further down this page are a working prototype of the first and third layers; the AI layer is the proposal.</p>
+  <ol>
+    <li><strong>Citizen reporting.</strong> Anyone can mark a barrier on a map: a missing ramp, a broken sound signal, a blocked sidewalk. Users never disclose a diagnosis.</li>
+    <li><strong>AI assistance.</strong> A multimodal AI model reads the photo attached to a report, suggests the barrier type, describes the visible evidence and states its uncertainty. A second model can scan street-level photos collected by city vehicles to propose likely barriers in areas where nobody has reported yet. AI only <em>suggests</em>: every suggestion goes to a human reviewer.</li>
+    <li><strong>Personalised routing and open data.</strong> Verified barriers are added to an open pedestrian network (OpenStreetMap). The planner then calculates different routes for wheelchair users, blind, low-vision, colour-blind and deaf pedestrians, and explains why each barrier matters.</li>
+  </ol>
+  <h3>Run by whom, reaching whom</h3>
+  <p>I propose that the Astana akimat run the system together with organisations of persons with disabilities, which would review reports and set priorities, as the CRPD Committee recommends (UN CRPD Committee, 2024, para. 20). It reaches residents with disabilities, older people and parents with prams. The akimat receives a live inspection and repair list instead of occasional audits.</p>
+
+  <h3>Evidence that this works elsewhere</h3>
+  <div class="cases">
+    <div class="case">
+      <span class="where">Case 1 · United States · since 2019</span>
+      <h4>Project Sidewalk + deep learning</h4>
+      <p>Researchers at the University of Washington built a tool in which volunteers label sidewalk problems in street imagery (Saha et al., 2019).</p>
+      <p>The resulting dataset of more than 300,000 labels was used to train deep-learning models that detect and validate sidewalk problems, in some tasks at near-human accuracy (Weld et al., 2019). The combination of crowd labels and AI is exactly the model proposed here.</p>
+    </div>
+    <div class="case">
+      <span class="where">Case 2 · Global · since 2023</span>
+      <h4>Be My Eyes and “Be My AI”</h4>
+      <p>The Danish app Be My Eyes, used by blind and low-vision people, integrated OpenAI’s GPT-4 to describe photos users take with their phones (OpenAI, 2023). In a customer-support deployment with Microsoft the company reported that issues were solved in about 4 minutes instead of 12 (Be My Eyes, 2023).</p>
+      <p>These are company-reported figures, and independent research on similar AI assistants for blind users found hallucinations and overconfident answers that can mislead users (Chang et al., 2025). The lesson: AI image description helps, but only with human fallback.</p>
+    </div>
+  </div>
+
+  <h3>Part B — The bill</h3>
+  <div class="bill" role="group" aria-label="The bill: costs of the proposal">
+    <div class="bill-head"><div class="t">The bill</div><div class="s">QalaAccess AI · Astana pilot · what it would really cost</div></div>
+    <div class="bill-item">
+      <div class="bill-line"><span class="k">Environmental</span><span class="v">≈ 48 kWh / year · on a coal-heavy grid</span></div>
+      <p>For the AI layer I assume an Astana pilot with 20,000 photo analyses per year (my assumption). Google reports that a median text prompt to its Gemini model uses 0.24 Wh of electricity and 0.26 ml of water (Google, 2025). Image analysis costs more; if each analysis used ten times as much (again my assumption), the pilot would need about 48 kWh a year, a negligible amount at national scale. But about two-thirds (67%) of Kazakhstan’s electricity is generated from coal (Agora Energiewende, 2024). If the data is processed in Kazakhstan for legal reasons (see below), every kilowatt-hour is mostly coal power. Scanning a whole city’s street imagery would multiply this, and the energy and water used to train the underlying models abroad are outside the city’s control.</p>
+    </div>
+    <div class="bill-item">
+      <div class="bill-line"><span class="k">Economic</span><span class="v">Software cheap · people &amp; repairs expensive</span></div>
+      <p>Software and data are cheap: OpenStreetMap is free under an open licence, the routing engine is open-source, and this website runs on free hosting. The real costs are people and concrete: reviewers who check reports, staff who maintain the system, and above all the crews who actually fix ramps, kerbs and signals. The state budget would pay, through the akimat; Kazakhstan already spends about 1 trillion tenge a year on support for persons with disabilities (Bizmedia.kz, 2026). If the AI layer uses a foreign commercial model, part of the money flows to companies abroad and the city risks depending on one supplier.</p>
+    </div>
+    <div class="bill-item">
+      <div class="bill-line"><span class="k">Labor</span><span class="v">Hidden, often unpaid work</span></div>
+      <p>Municipal inspectors would move from routine audits to targeted checks of reported barriers. The system also depends on hidden labour: disabled residents who report barriers for free, OpenStreetMap volunteers who map the network, reviewers who moderate reports, and, upstream, low-paid data annotators who labelled the images on which commercial vision models were trained. A fair design pays disability organisations for verification instead of treating disabled people as a free sensor network.</p>
+    </div>
+    <div class="bill-item">
+      <div class="bill-line"><span class="k">Political &amp; governance</span><span class="v">High sensitivity · data must stay in KZ</span></div>
+      <p>A map of where disabled people report problems, and the routes they request, is sensitive: it reveals the daily movements of a vulnerable group. Street photos capture faces and car number plates. Kazakhstan’s Law on Personal Data requires databases with personal data to be stored on Kazakh territory (Law No. 94-V, 2013), which rules out simply sending photos to a foreign AI service. The system should blur faces and plates on the user’s phone, avoid storing route requests, and run the model in the country, for example on the National AI Platform created by the new Law on Artificial Intelligence (No. 230-VIII, signed 17 November 2025, in force since January 2026). That law sets requirements for safety, transparency and accountability and requires labelling of works created with AI, so every AI suggestion in the system must be clearly marked as such. The proposal is also consistent with the UNESCO Recommendation on the Ethics of AI (2021) and the OECD AI Principles (2019, updated 2024), which call for human oversight, transparency and inclusion. Control should be shared: data stays open in OpenStreetMap, so no single agency or company owns it.</p>
+    </div>
+    <div class="bill-item">
+      <div class="bill-line"><span class="k">Data ethics</span><span class="v">Photos · locations · never health data</span></div>
+      <p>The system needs photos, locations and barrier types, but never health information. Reporters give consent when they submit; bystanders in photos cannot, which is why automatic blurring is essential. What could go wrong: an AI model trained on American streets misses a barrier on an icy Astana sidewalk, and the app sends someone into it; false or malicious reports close good routes; older residents without smartphones are left out. The safeguards are the same each time: AI never certifies a route as safe, unknown data is never treated as accessible, and humans verify before data affects routing.</p>
+    </div>
+    <div class="bill-total"><span class="k">Total</span><span class="v">Cheap in compute · expensive in people, trust and repairs</span></div>
+  </div>
+
+  <div class="verdict" id="verdict">
+    <div class="t">Verdict: <span>yes, but only under conditions</span></div>
+    <p>The citizen reporting and personalised routing layers are cheap, low-risk and fill a real data gap, so they should be piloted in Astana now. The AI layer is worth adding only if five conditions hold:</p>
+    <ol>
+      <li><b>AI assists human reviewers</b> and never certifies a route or facility as accessible.</li>
+      <li><b>Personal data is removed on the device</b> or processed inside Kazakhstan.</li>
+      <li><b>Organisations of persons with disabilities co-govern</b> the system and are paid for their work.</li>
+      <li><b>The akimat commits a budget and deadlines</b> to fix verified barriers. Without this, the system becomes only a more detailed map of failure.</li>
+      <li><b>The pilot is evaluated after one year</b> with disabled users, including whether reports led to repairs.</li>
+    </ol>
+    <p>If these conditions cannot be met, the honest answer is <b>no</b>: Kazakhstan should first invest in fixing known barriers and collecting street-level data without AI.</p>
+  </div>
+
+  </div>
+</section>
+
+<!-- 05 ROUTE PLANNER (interactive prototype) -->
+<section class="block" id="planner" aria-labelledby="planner-h">
+  <div class="wrap wide">
+  <div class="sec-head"><div class="num" aria-hidden="true">05</div><h2 id="planner-h">Try the prototype: Accessible Route Planner</h2></div>
+  <p class="sec-intro">Choose a start and a destination in the pilot area, select one or more accessibility needs, and compare the shortest walking route with a route that fits those needs. The planner explains in plain words why each barrier matters. You never need to disclose a diagnosis.</p>
+    <div class="split">
+      <div class="sidebar">
+        <div class="card">
+          <div class="step-label"><b>1</b> Start and destination</div>
+          <div class="field">
+            <label for="startSelect">Start (A)</label>
+            <select id="startSelect"></select>
+          </div>
+          <div class="field">
+            <label for="endSelect">Destination (B)</label>
+            <select id="endSelect"></select>
+          </div>
+          <div class="row" role="group" aria-label="Pick points on the map">
+            <button class="btn btn-ghost btn-sm" id="pickA" aria-pressed="false">📍 Click map for A</button>
+            <button class="btn btn-ghost btn-sm" id="pickB" aria-pressed="false">📍 Click map for B</button>
+          </div>
+          <div class="row" style="margin-top:.5rem">
+            <button class="btn btn-secondary btn-sm" id="swapBtn">⇅ Swap</button>
+            <button class="btn btn-secondary btn-sm" id="clearBtn">✕ Clear</button>
+          </div>
+          <p class="hint muted" id="pickHint" style="font-size:.85rem;margin:.5rem 0 0">Tip: choose from the lists, or press a “Click map” button and click anywhere in the pilot area.</p>
+        </div>
+
+        <div class="card">
+          <div class="step-label"><b>2</b> Accessibility needs</div>
+          <fieldset style="border:0;padding:0;margin:0">
+            <legend class="sr-only">Accessibility preferences (choose any)</legend>
+            <label class="check"><input type="checkbox" name="pref" value="wheelchair"><span><strong>Wheelchair / step-free</strong><span class="desc">Stairs are impassable. Avoids raised kerbs, steep inclines, unpaved surfaces.</span></span></label>
+            <label class="check"><input type="checkbox" name="pref" value="blind"><span><strong>Blind or visually impaired</strong><span class="desc">Prefers crossings with working audible signals and tactile paving.</span></span></label>
+            <label class="check"><input type="checkbox" name="pref" value="lowVision"><span><strong>Low vision</strong><span class="desc">Prefers signalised, clearly identifiable crossings; avoids reported obstacles.</span></span></label>
+            <label class="check"><input type="checkbox" name="pref" value="colorVision"><span><strong>Colour-vision accessibility</strong><span class="desc">Prefers signals with pictograms or countdowns, not colour alone.</span></span></label>
+            <label class="check"><input type="checkbox" name="pref" value="deaf"><span><strong>Deaf or hard of hearing</strong><span class="desc">Prefers crossings with visual signals; information not dependent on sound.</span></span></label>
+          </fieldset>
+        </div>
+
+        <button class="btn btn-primary btn-big" id="findBtn">FIND ACCESSIBLE ROUTE</button>
+        <div id="plannerStatus" role="status" aria-live="polite"></div>
+      </div>
+
+      <div>
+        <div class="map-wrap"><div id="plannerMap" class="map" role="application" aria-label="Map of the pilot area for choosing points A and B"></div></div>
+        <p class="map-legend">
+          <span class="legend-line short" aria-hidden="true"></span>Shortest route (dashed grey) &nbsp;
+          <span class="legend-line acc" aria-hidden="true"></span>Preference-aware route (solid teal) &nbsp;
+          🪜 stairs · ⚠ issue on route · ✓ reported barrier · pilot area outlined<br>
+          Map not loading or says “Access blocked”? Use the <strong>Map style</strong> button (layers icon, top-right of the map) to switch to another base map.
+        </p>
+        <div id="routeResult" class="card route-explain" style="margin-top:1rem" tabindex="-1" aria-live="polite">
+          <h3 style="margin-top:0">Route explanation</h3>
+          <p class="muted">No route calculated yet. Choose A and B, select your needs and press <strong>FIND ACCESSIBLE ROUTE</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 06 REPORT A BARRIER (interactive prototype) -->
+<section class="block" id="report" aria-labelledby="report-h">
+  <div class="wrap wide">
+  <div class="sec-head"><div class="num" aria-hidden="true">06</div><h2 id="report-h">Report a Barrier</h2></div>
+  <p class="sec-intro">Seen something that stops a wheelchair user or a blind pedestrian from passing? Mark it in three steps. It is added to the map right away and the route planner avoids it. We do not ask for your name, ID or any medical information.</p>
+    <div class="split wide-side">
+      <div>
+        <div class="map-wrap">
+          <div id="reportMap" class="map" role="application" aria-label="Map for choosing the barrier location. Click to place the report."></div>
+          <div class="crosshair" id="reportCrosshair" aria-hidden="true"></div>
+        </div>
+        <p class="muted" id="reportRouteNote" style="font-size:.85rem;margin:.4rem 0 0" hidden><span class="legend-line acc" aria-hidden="true"></span>Your last planned route is shown faintly (teal = recommended, grey dashed = shortest) so you can report a barrier on it.</p>
+        <div class="notice info" style="font-size:.88rem">
+          <strong>Demo storage</strong>
+          Reports are saved only in this browser (localStorage). Other people and devices cannot see them, and there is no shared database in this prototype.
+          <div style="margin-top:.5rem"><button type="button" class="btn btn-ghost btn-sm" id="clearMyReports">🗑 Remove my reports (keep samples)</button></div>
+        </div>
+      </div>
+      <form class="sidebar" id="reportForm" novalidate>
+        <div class="card">
+          <div class="step-label"><b>1</b> Where is it?</div>
+          <p style="font-size:.9rem;margin-bottom:.6rem">Click or tap the map — or move the map so the cross is on the spot and press:</p>
+          <div class="row">
+            <button type="button" class="btn btn-secondary btn-sm" id="useCenterBtn">⊕ Use map centre</button>
+          </div>
+          <div class="field" style="margin-top:.6rem">
+            <label for="reportLandmark">…or jump to a landmark</label>
+            <select id="reportLandmark"></select>
+          </div>
+          <p id="reportLocation" class="muted" style="font-size:.88rem;margin:0" aria-live="polite">No location chosen yet.</p>
+        </div>
+        <div class="card">
+          <div class="step-label"><b>2</b> What is the barrier?</div>
+          <div class="cat-grid" id="catGrid" role="radiogroup" aria-label="Barrier category"></div>
+        </div>
+        <div class="card">
+          <div class="step-label"><b>3</b> Details (optional)</div>
+          <div class="field">
+            <label for="reportDesc">Short description</label>
+            <textarea id="reportDesc" maxlength="500" placeholder="e.g. High kerb at the crossing, a wheelchair cannot get onto the sidewalk."></textarea>
+            <div class="hint"><span id="descCount">0</span>/500 characters. Please do not write names or personal details.</div>
+          </div>
+          <div class="field">
+            <label for="reportPhoto">Photo</label>
+            <input type="file" id="reportPhoto" accept="image/jpeg,image/png,image/webp">
+            <div class="hint">JPG/PNG/WebP up to 5 MB. Avoid faces and car number plates. Stored as a small copy in this browser.</div>
+            <img id="reportPhotoPreview" class="photo-preview" alt="Preview of the attached photo" hidden>
+          </div>
+          <div id="reportErrors" role="alert"></div>
+          <button type="submit" class="btn btn-primary btn-big">Submit report</button>
+        </div>
+        <div id="reportSuccess" aria-live="polite"></div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- AI TRANSPARENCY + REFERENCES -->
+<section class="block" id="transparency" aria-labelledby="transparency-h">
+  <div class="wrap">
+  <div class="trans">
+    <h3 id="transparency-h">AI transparency statement</h3>
+    <p>This project was co-created by Gaziza Aushenova and Claude (Anthropic), used through Claude Code, working together the way the course asks students to work with their AI. Claude wrote all of the website’s code: the page layout, the interactive map, the route planner and the barrier-reporting form. It also built the data and routing method: it downloaded real footpath, crossing and stair data for Astana’s Nurzhol Boulevard from OpenStreetMap, turned it into a pedestrian network, and implemented Dijkstra’s algorithm with plain-language explanations of why each barrier stops a person. Gaziza chose the topic, decided what the site should and should not include, drafted the section texts and directed revisions.</p>
+    <p>What the AI Process Log for this project shows: continuous iteration, with the structure, the features and each section discussed and revised in dialogue rather than generated once. Features were proposed, tested in a browser and then kept or removed at Gaziza’s request.</p>
+  </div>
+  </div>
+</section>
+
+<section class="block" id="references" aria-labelledby="references-h">
+  <div class="wrap refs">
+    <h3 id="references-h">References</h3>
+    <ol>
+      <li>Agora Energiewende (2024). <em>Modernising Kazakhstan’s coal-dependent power sector through renewables: Challenges, solutions and scenarios up to 2030 and beyond</em>. <a href="https://www.agora-energiewende.org/fileadmin/Projekte/2023/2023_27_PST_Kazakhstan_2023/A-EW_319_Kazakhstan_2023_EN_WEB.pdf">agora-energiewende.org</a></li>
+      <li>Be My Eyes (2023, 15 November). <em>Be My Eyes integrates Be My AI™ into its first contact center with stunning results</em> [press release]. Business Wire. <a href="https://www.businesswire.com/news/home/20231115464013/en/Be-My-Eyes-Integrates-Be-My-AI%E2%84%A2-into-its-First-Contact-Center-with-Stunning-Results">businesswire.com</a></li>
+      <li>Bizmedia.kz (2026, 21 April). <em>Доля лиц с инвалидностью растет в Казахстане последние 4 года и составляет 3,7% населения</em> [Share of persons with disabilities in Kazakhstan has grown for four years and is 3.7% of the population]. <a href="https://bizmedia.kz/2026-04-21-dolya-licz-s-invalidnostyu-rastet-v-kazahstane-poslednie-4-goda-i-sostavlyaet-37-naseleniya/">bizmedia.kz</a></li>
+      <li>Bolten, N., &amp; Caspi, A. (2021). Towards routine, city-scale accessibility metrics: Graph theoretic interpretations of pedestrian access using personalized pedestrian network analysis. <em>PLOS ONE, 16</em>(3), e0248399. <a href="https://doi.org/10.1371/journal.pone.0248399">doi.org/10.1371/journal.pone.0248399</a></li>
+      <li>CABAR.asia (n.d.). <em>How accessible is Kazakhstan for people with disabilities?</em> Central Asian Bureau for Analytical Reporting. <a href="https://cabar.asia/en/how-accessible-is-kazakhstan-for-people-with-disabilities">cabar.asia</a></li>
+      <li>Chang, R.-C., Natalie, R., Xu, W., Yap, J. Z. F., &amp; Guo, A. (2025). Probing the gaps in ChatGPT live video chat for real-world assistance for people who are blind or visually impaired. arXiv:2508.03651. <a href="https://arxiv.org/abs/2508.03651">arxiv.org</a></li>
+      <li>European Training Foundation (2026). <em>Disability country note: Kazakhstan</em>. <a href="https://www.etf.europa.eu/sites/default/files/2026-07/Disability%20Country%20note%20ENG_Kazakhstan.pdf">etf.europa.eu</a></li>
+      <li>Forbes.kz (2025). <em>Число людей с инвалидностью в Казахстане выросло за 12 лет почти на треть</em> [The number of people with disabilities in Kazakhstan grew by almost a third in 12 years] (analysis of official data by Med365). <a href="https://forbes.kz/articles/chislo-lyudey-s-invalidnostyu-v-kazahstane-vyroslo-za-12-let-pochti-na-tret-4f2e56">forbes.kz</a></li>
+      <li>Google Cloud (2025). <em>Measuring the environmental impact of AI inference</em>. <a href="https://cloud.google.com/blog/products/infrastructure/measuring-the-environmental-impact-of-ai-inference">cloud.google.com</a></li>
+      <li>Hosseini, M., Sevtsuk, A., Miranda, F., Cesar, R. M., &amp; Silva, C. T. (2023). Mapping the walk: A scalable computer vision approach for generating sidewalk network datasets from aerial imagery. <em>Computers, Environment and Urban Systems, 101</em>, 101950. <a href="https://doi.org/10.1016/j.compenvurbsys.2023.101950">doi.org/10.1016/j.compenvurbsys.2023.101950</a></li>
+      <li>Kaiyrly, S. (2025). <em>Housing blocks for vulnerable groups: Accessibility and satisfaction for people with disabilities in Astana, Kazakhstan</em> (Master’s project). Nazarbayev University, Graduate School of Public Policy. <a href="https://nur.nu.edu.kz/handle/123456789/17753">nur.nu.edu.kz</a></li>
+      <li>Ministry of Labour and Social Protection of the Republic of Kazakhstan (n.d.). <em>90.7% of social and transport infrastructure facilities are accessible for disabled people</em>. <a href="https://www.gov.kz/org/enbek/press/news/details/18396?lang=en">gov.kz</a></li>
+      <li>Mobasheri, A., Deister, J., &amp; Dieterich, H. (2017). Wheelmap: The wheelchair accessibility crowdsourcing platform. <em>Open Geospatial Data, Software and Standards, 2</em>, 27. <a href="https://doi.org/10.1186/s40965-017-0040-5">doi.org/10.1186/s40965-017-0040-5</a></li>
+      <li>OECD (2019, updated 2024). <em>OECD AI Principles</em>. <a href="https://oecd.ai/en/ai-principles">oecd.ai</a></li>
+      <li>OpenAI (2023). <em>Be My Eyes</em> (customer story). <a href="https://openai.com/index/be-my-eyes">openai.com</a></li>
+      <li>OpenStreetMap contributors (2026). Pedestrian network data for Nurzhol Boulevard, Astana, downloaded 23 November 2026 via the Overpass API. Licence: ODbL. <a href="https://www.openstreetmap.org/copyright">openstreetmap.org</a></li>
+      <li>Phillips, S. D. (2011). <em>Disability and mobile citizenship in postsocialist Ukraine</em>. Bloomington: Indiana University Press. <a href="https://muse.jhu.edu/book/1283">muse.jhu.edu</a></li>
+      <li>Prime Minister of the Republic of Kazakhstan (2026). <em>Network of rehabilitation centers and accessibility being expanded in Kazakhstan</em>. <a href="https://primeminister.kz/en/news/set-reabilitacionnyx-centrov-i-dostupnost-sredy-rassiriaiut-v-kazaxstane-31293">primeminister.kz</a></li>
+      <li>Rasell, M., &amp; Iarskaia-Smirnova, E. (Eds.) (2014). <em>Disability in Eastern Europe and the former Soviet Union: History, policy and everyday life</em>. London: Routledge. <a href="https://www.routledge.com/Disability-in-Eastern-Europe-and-the-Former-Soviet-Union-History-policy-and-everyday-life/Rasell-Iarskaia-Smirnova/p/book/9781138687400">routledge.com</a></li>
+      <li>Republic of Kazakhstan (2013). <em>Law No. 94-V “On Personal Data and Their Protection”</em>. <a href="https://adilet.zan.kz/eng/docs/Z1300000094">adilet.zan.kz</a></li>
+      <li>Republic of Kazakhstan (2025). <em>Law No. 230-VIII “On Artificial Intelligence”</em>, 17 November 2025. <a href="https://adilet.zan.kz/eng/docs/Z2500000230">adilet.zan.kz</a></li>
+      <li>Saha, M., et al. (2019). Project Sidewalk: A web-based crowdsourcing tool for collecting sidewalk accessibility data at scale. In <em>Proceedings of CHI 2019</em>. ACM. <a href="https://makeabilitylab.cs.washington.edu/media/publications/Saha_ProjectSidewalkAWebBasedCrowdsourcingToolForCollectingSidewalkAccessibilityDataAtScale_CHI2019.pdf">makeabilitylab.cs.washington.edu</a></li>
+      <li>UN Committee on the Rights of Persons with Disabilities (2024). <em>Concluding observations on the initial report of Kazakhstan</em> (CRPD/C/KAZ/CO/1), 19 April 2024. <a href="https://digitallibrary.un.org/record/4044522">digitallibrary.un.org</a></li>
+      <li>UNDP Kazakhstan (n.d.). <em>Leaving no one behind: Building access – stepping stone to social inclusion for people with disabilities</em>. <a href="https://www.undp.org/kazakhstan/blog/leaving-no-one-behind-building-access-stepping-stone-social-inclusion-people-disabilities">undp.org</a></li>
+      <li>UNESCO (2021). <em>Recommendation on the Ethics of Artificial Intelligence</em>. <a href="https://www.unesco.org/en/artificial-intelligence/recommendation-ethics">unesco.org</a></li>
+      <li>Weld, G., Jang, E., Li, A., Zeng, A., Heimerl, K., &amp; Froehlich, J. E. (2019). Deep learning for automatically detecting sidewalk accessibility problems using streetscape imagery. In <em>Proceedings of ASSETS 2019</em>. ACM. <a href="https://www.sigaccess.org/2019/11/2019-best-student-paper/">sigaccess.org</a></li>
+      <li>World Health Organization (2022). <em>Global report on health equity for persons with disabilities</em>. Geneva: WHO. <a href="https://www.who.int/publications/i/item/9789240063600">who.int</a></li>
+      <li>Yespolova, D. (2020). <em>Assessing physical accessibility of public spaces in the city of Almaty, Kazakhstan</em> (Master’s thesis). University of Alberta. <a href="https://era.library.ualberta.ca/items/c74d0167-7120-4a6c-8cd1-1789814c192f">era.library.ualberta.ca</a></li>
+    </ol>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    QalaAccess AI · PLS 419 “An AI Answer for Kazakhstan” · Every Journey Matters<br>
+    Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> (ODbL) · pilot network downloaded <span id="osmDate"></span><br>
+    Sample reports and some crossing attributes are synthetic and labelled as such.
+  </div>
+</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="js/data/graph.js"></script>
+<script src="js/data/demoAttributes.js"></script>
+<script src="js/data/landmarks.js"></script>
+<script src="js/data/seedReports.js"></script>
+<script src="js/router.js"></script>
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+<script src="js/planner.js"></script>
+<script src="js/report.js"></script>
+</body>
+</html>
